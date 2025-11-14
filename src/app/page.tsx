@@ -1,6 +1,5 @@
 "use client";
 
-import { closePaymentModal, useFlutterwave } from "flutterwave-react-v3";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,47 +11,48 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useFlutterwavePayment, validateAmount } from "@/features/payment";
 
 export default function Home() {
   const [amount, setAmount] = useState<string>("");
+  const [error, setError] = useState<string>("");
 
-  const config = {
-    public_key: process.env.NEXT_PUBLIC_FLUTTERWAVE_PUBLIC_KEY || "",
-    tx_ref: `tx-${Date.now()}`,
+  const { initiatePayment, isReady } = useFlutterwavePayment({
     amount: Number.parseFloat(amount) || 0,
     currency: "RWF",
-    payment_options: "mobilemoney",
     customer: {
       email: "user@example.com",
       phone_number: "0700000000",
       name: "Test User",
     },
-    customizations: {
+    paymentMethods: ["mobilemoney"],
+    customization: {
       title: "Mobile Money Payment",
       description: "Pay with Mobile Money",
-      logo: "",
     },
-  };
-
-  const handleFlutterPayment = useFlutterwave(config);
+  });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setError("");
 
-    if (!amount || Number.parseFloat(amount) <= 0) {
-      alert("Please enter a valid amount");
+    const numAmount = Number.parseFloat(amount);
+    const validation = validateAmount(numAmount, "RWF");
+
+    if (!validation.isValid) {
+      setError(validation.error || "Invalid amount");
       return;
     }
 
-    handleFlutterPayment({
-      callback: (response) => {
-        console.log(response);
-        if (response.status === "successful") {
-          alert(
-            `Payment successful! Transaction ID: ${response.transaction_id}`,
-          );
-        }
-        closePaymentModal();
+    initiatePayment({
+      onSuccess: (response) => {
+        alert(`Payment successful! Transaction ID: ${response.transaction_id}`);
+        console.log("Payment response:", response);
+        setAmount("");
+      },
+      onError: (error) => {
+        setError(error.message);
+        console.error("Payment error:", error);
       },
       onClose: () => {
         console.log("Payment modal closed");
@@ -66,7 +66,7 @@ export default function Home() {
         <CardHeader>
           <CardTitle>Mobile Money Payment</CardTitle>
           <CardDescription>
-            Enter the amount you want to pay with mobile money
+            Enter the amount you want to pay with mobile money (RWF)
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -76,15 +76,20 @@ export default function Home() {
               <Input
                 id="amount"
                 type="number"
-                placeholder="Enter amount"
+                placeholder="Enter amount (min 100)"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
-                min="1"
+                min="100"
                 step="1"
                 required
               />
+              {error && <p className="text-sm text-red-500">{error}</p>}
             </div>
-            <Button type="submit" className="w-full">
+            <Button
+              type="submit"
+              className="w-full"
+              disabled={!isReady || !amount}
+            >
               Pay with Mobile Money
             </Button>
           </form>

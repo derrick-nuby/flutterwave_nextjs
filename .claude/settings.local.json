@@ -12,7 +12,8 @@
       "Bash(pnpm add:*)",
       "Bash(pnpm format:*)",
       "Bash(pnpm lint:*)",
-      "Bash(pnpm type-check:*)"
+      "Bash(pnpm type-check:*)",
+      "Bash(pnpm lint:unsafe:*)"
     ],
     "deny": [],
     "ask": []
