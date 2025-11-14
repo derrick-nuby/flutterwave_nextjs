@@ -36,30 +36,6 @@ A modern, type-safe Next.js application template for integrating **Flutterwave**
 - npm, yarn, pnpm, or bun
 - A Flutterwave account (sign up at [https://flutterwave.com](https://flutterwave.com))
 
-## Installation
-
-1. Clone the repository:
-```bash
-git clone <your-repo-url>
-cd flutterwave_nextjs
-```
-
-2. Install dependencies:
-```bash
-npm install
-# or
-yarn install
-# or
-pnpm install
-```
-
-3. Create a `.env.local` file in the root directory:
-```env
-NEXT_PUBLIC_FLUTTERWAVE_PUBLIC_KEY=your_public_key_here
-FLUTTERWAVE_SECRET_KEY=your_secret_key_here
-NEXT_PUBLIC_APP_URL=http://localhost:3000
-```
-
 ## Configuration
 
 ### Getting Flutterwave API Keys
@@ -98,6 +74,7 @@ npm run type-check   # Run TypeScript type checking
 ### Pre-deployment Checklist
 
 Before deploying to production, run:
+
 ```bash
 npm run lint:check && npm run format:check && npm run type-check && npm run build
 ```
@@ -193,6 +170,7 @@ export default function PaymentButton() {
 ### 4. Testing
 
 Use Flutterwave's test credentials:
+
 - **Test Card**: `4187427415564246`
 - **CVV**: `828`
 - **Expiry**: Any future date
@@ -201,6 +179,7 @@ Use Flutterwave's test credentials:
 ## Development Workflow
 
 1. **Start Development Server**:
+
    ```bash
    npm run dev
    ```
@@ -208,12 +187,14 @@ Use Flutterwave's test credentials:
 2. **Make Changes**: Edit files in the `src/` directory
 
 3. **Check Code Quality**:
+
    ```bash
    npm run lint
    npm run type-check
    ```
 
 4. **Build for Production**:
+
    ```bash
    npm run build
    ```
@@ -230,17 +211,20 @@ Use Flutterwave's test credentials:
 ## Resources
 
 ### Flutterwave
+
 - [Official Documentation](https://developer.flutterwave.com/docs)
 - [React Integration Guide](https://developer.flutterwave.com/docs/flutterwave-react-v3)
 - [API Reference](https://developer.flutterwave.com/reference)
 - [Dashboard](https://dashboard.flutterwave.com)
 
 ### Next.js
+
 - [Next.js Documentation](https://nextjs.org/docs)
 - [Learn Next.js](https://nextjs.org/learn)
 - [Next.js GitHub](https://github.com/vercel/next.js)
 
 ### Tools
+
 - [Biome Documentation](https://biomejs.dev)
 - [Tailwind CSS](https://tailwindcss.com/docs)
 - [TypeScript Handbook](https://www.typescriptlang.org/docs)
@@ -250,20 +234,24 @@ Use Flutterwave's test credentials:
 ### Common Issues
 
 **Payment not processing**:
+
 - Verify your API keys are correct
 - Check if you're using test keys in development
 - Ensure your account is verified for live transactions
 
 **Mobile Money issues**:
+
 - Confirm the phone number format (e.g., `250788123456` for Rwanda)
 - Check if the mobile money provider is available in your region
 
 **TypeScript errors**:
+
 ```bash
 npm run type-check
 ```
 
 **Linting errors**:
+
 ```bash
 npm run lint
 ```
@@ -284,10 +272,12 @@ MIT License - feel free to use this project for your applications.
 ## Support
 
 For Flutterwave-specific issues:
-- Email: developers@flutterwavego.com
-- Documentation: https://developer.flutterwave.com
+
+- Email: <developers@flutterwavego.com>
+- Documentation: <https://developer.flutterwave.com>
 
 For project issues:
+
 - Open an issue on GitHub
 
 ---
